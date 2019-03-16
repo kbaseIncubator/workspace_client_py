@@ -6,7 +6,7 @@ Generic workspace client for KBase's workspace service.
 
 Install with pip:
 
-```py
+```sh
 pip install --extra-index-url https://pypi.anaconda.org/kbase/simple \
     kbase-workspace-client==0.0.1
 ```
