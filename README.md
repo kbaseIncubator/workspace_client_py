@@ -1,6 +1,6 @@
-# KBase Workspace Client
+# KBase Workspace - Python Client
 
-Generic workspace client for KBase's workspace service.
+Generic workspace client for [KBase's workspace service](https://kbase.us/services/ws/docs).
 
 ## Installation
 
