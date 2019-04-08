@@ -8,7 +8,7 @@ Install with pip:
 
 ```sh
 pip install --extra-index-url https://pypi.anaconda.org/kbase/simple \
-    kbase-workspace-client==0.0.1
+    kbase-workspace-client==0.0.2
 ```
 
 ## Usage
@@ -19,15 +19,15 @@ Import and initialize the `WorkspaceClient` class:
 from kbase_workspace_client import WorkspaceClient
 
 ws_client = WorkspaceClient(
-  url="https://appdev.kbase.us/services",
+  url="https://appdev.kbase.us/services/ws",
   token="my_authentication_token"
 )
 ```
 
 `url` should be the url of KBase services, which will be one of:
-* `https://ci.kbase.us/services`
-* `https://appdev.kbase.us/services`
-* `https://kbase.us/services`
+* `https://ci.kbase.us/services/ws`
+* `https://appdev.kbase.us/services/ws`
+* `https://kbase.us/services/ws`
 
 `token` should be a developer or service authentication token.
 
@@ -84,7 +84,7 @@ Raised on any invalid response from the workspace. Properties on the error objec
 from kbase_workspace_client import WorkspaceClient, WorkspaceResponseError
 
 workspace_client = WorkspaceClient(
-  url="https://appdev.kbase.us/services",
+  url="https://appdev.kbase.us/services/ws",
   token="abcxyz"
 )
 
