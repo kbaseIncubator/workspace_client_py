@@ -1,6 +1,6 @@
 import os
 import unittest
-from kbase_workspace_client import WorkspaceClient, WorkspaceResponseError
+from src.kbase_workspace_client import WorkspaceClient, WorkspaceResponseError
 
 if not os.environ.get('TEST_TOKEN'):
     raise RuntimeError("TEST_TOKEN environment variable is required.")
@@ -37,6 +37,20 @@ class TestMain(unittest.TestCase):
             contents = fd.read()
             self.assertTrue(contents)
         os.remove('tmp.json')
+
+    def test_handle_to_shock(self):
+        pass
+        valid_ws_id = '34819/10/1'
+        data = _ws_client.req('get_objects2', {
+            'objects': [{'ref': valid_ws_id}],
+            'no_data': 1
+        })['data'][0]
+        handle_id = data['extracted_ids']['handle'][0]
+        shock_id = _ws_client.handle_to_shock(handle_id)
+        self.assertEqual(shock_id, 'd2d2ba03-b4f1-4ec9-91f0-99ea70991607')
+
+    def test_download_shock_file(self):
+        pass
 
     def test_err(self):
         _id = '0/0/0'

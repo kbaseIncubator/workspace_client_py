@@ -9,7 +9,7 @@ from .exceptions import WorkspaceResponseError, UnauthorizedShockDownload, Missi
 def _post_req(payload, url, token, file_path=None):
     """Make a post request to the workspace server and process the response."""
     headers = {'Authorization': token}
-    with requests.post(url + '/ws', data=json.dumps(payload), headers=headers, stream=True) as resp:
+    with requests.post(url, data=json.dumps(payload), headers=headers, stream=True) as resp:
         if not resp.ok:
             raise WorkspaceResponseError(resp)
         if file_path:
@@ -48,6 +48,7 @@ class WorkspaceClient:
             token - User or service authentication token from KBase. Optional.
         """
         self._url = url
+        self._ws_url = url
         self._token = token
 
     def req(self, method, params):
@@ -60,7 +61,7 @@ class WorkspaceClient:
         Raises a WorkspaceResponseError on an unsuccessful request.
         """
         payload = {'version': '1.1', 'method': method, 'params': [params]}
-        return _post_req(payload, self._url, self._token)
+        return _post_req(payload, self._ws_url, self._token)
 
     def admin_req(self, method, params):
         """
@@ -76,7 +77,7 @@ class WorkspaceClient:
             'method': 'Workspace.administer',
             'params': [{'command': method, 'params': params}]
         }
-        return _post_req(payload, self._url, self._token)
+        return _post_req(payload, self._ws_url, self._token)
 
     def req_download(self, method, params, dest_path):
         """
@@ -90,7 +91,7 @@ class WorkspaceClient:
         """
         _validate_file_for_writing(dest_path)
         payload = {'version': '1.1', 'method': method, 'params': [params]}
-        _post_req(payload, self._url, self._token, dest_path)
+        _post_req(payload, self._ws_url, self._token, dest_path)
 
     def admin_req_download(self, method, params, dest_path):
         """
@@ -108,7 +109,7 @@ class WorkspaceClient:
             'method': 'Workspace.administer',
             'params': [{'command': method, 'params': params}]
         }
-        return _post_req(payload, self._url, self._token, dest_path)
+        return _post_req(payload, self._ws_url, self._token, dest_path)
 
     def handle_to_shock(self, handle):
         """
@@ -126,7 +127,7 @@ class WorkspaceClient:
             'id': str(uuid4())
         }
         resp = requests.post(
-            self._url + '/handle_service',
+            self._url.replace('/ws', '/handle_service'),
             data=json.dumps(request_data),
             headers=headers
         )

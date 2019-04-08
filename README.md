@@ -121,3 +121,19 @@ Get the shock ID from a handle ID in order to download the file:
 shock_id = ws_client.handle_to_shock(handle_id)
 ws_client.download_from_shock(shock_id, dest_path)
 ```
+
+## Development
+
+### Publishing
+
+Build the package
+
+```
+python setup.py sdist
+```
+
+Publish the package
+
+```
+anaconda upload -i -u kbase dist/kbase_module-{version}.tar.gz
+```
