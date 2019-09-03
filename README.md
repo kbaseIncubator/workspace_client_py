@@ -61,6 +61,21 @@ objects = workspace_client.admin_req('getObjects', {
 })
 ```
 
+### ws_client.generate_all_ids_for_workspace(workspace_id, admin=False, latest=True)
+
+Generator that yields pairs of `(object_id, object_version)` for a workspace.
+
+This will yield IDs/versions for *every* object in the workspace.
+
+Options:
+* `admin` - whether to do a "list_objects" method call using regular or admin credentials
+* `latest` - whether to fetch only the latest object versions, or all object versions
+
+```py
+for (object_id, object_version) in workspace_client.generate_all_ids_for_workspace(123):
+    print(f"Found object with ID {object_id} and version {object_version}")
+```
+
 ### Streaming responses to files
 
 You can stream the workspace response to a file by using:
