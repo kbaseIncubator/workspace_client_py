@@ -135,6 +135,17 @@ Options:
 ws_client.download_reads_fastq("1/2/3", "/tmp/xyz")
 ```
 
+### ws_client.get_assembly_from_genome(ref, admin=False)
+
+Given a Genome object, fetch the reference to its Assembly object in the workspace.
+
+Options:
+* `admin` - whether or not to download as an admin or as a normal user
+
+```py
+assembly_ref = ws_client.get_assembly_from_genome('1/2/3')
+```
+
 ## Exceptions
 
 ### WorkspaceResponseError
