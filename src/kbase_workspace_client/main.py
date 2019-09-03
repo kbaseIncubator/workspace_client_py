@@ -124,7 +124,7 @@ class WorkspaceClient:
         request_data = {
             'method': 'AbstractHandle.hids_to_handles',
             'params': [[handle]],
-            'id': str(uuid4())
+            'id': "0"
         }
         resp = requests.post(
             self._url.replace('/ws', '/handle_service'),
