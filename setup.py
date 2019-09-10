@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name='kbase_workspace_client',
@@ -10,7 +10,7 @@ setup(
     url='https://github.com/kbaseincubator/kbase_workspace_client',
     package_dir={'': 'src'},
     packages=[
-        'kbase_workspace_client'
+        "kbase_workspace_client"
     ],
     install_requires=[
         'requests>=2'
