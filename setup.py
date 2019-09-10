@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='kbase_workspace_client',
-    version='0.2.0',
+    version='0.2.1',
     description='KBase workspace client',
     author='KBase Team',
     author_email='info@kbase.us',

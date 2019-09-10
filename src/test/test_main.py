@@ -2,8 +2,8 @@ import os
 import unittest
 import tempfile
 import shutil
-from src.kbase_workspace_client import WorkspaceClient, WorkspaceResponseError
-from src.kbase_workspace_client.exceptions import InvalidWSType, InvalidGenome
+from kbase_workspace_client import WorkspaceClient, WorkspaceResponseError
+from kbase_workspace_client.exceptions import InvalidWSType, InvalidGenome
 
 if not os.environ.get('TEST_TOKEN'):
     raise RuntimeError("TEST_TOKEN environment variable is required.")

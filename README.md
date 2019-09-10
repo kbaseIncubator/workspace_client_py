@@ -177,6 +177,12 @@ except WorkspaceResponseError as err:
 
 ## Development
 
+### Tests
+
+Run tests with: `TEST_TOKEN=xyz make test`
+
+The `TEST_TOKEN` env var should be set to a KBase workspace token.
+
 ### Publishing
 
 Build the package

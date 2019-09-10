@@ -2,8 +2,8 @@ import os
 import json
 import requests
 
-from src.utils.contigset_to_fasta import contigset_to_fasta
-from src.kbase_workspace_client.exceptions import (
+from kbase_workspace_client.utils.contigset_to_fasta import contigset_to_fasta
+from kbase_workspace_client.exceptions import (
     WorkspaceResponseError,
     UnauthorizedShockDownload,
     MissingShockFile,

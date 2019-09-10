@@ -1,4 +1,4 @@
 .PHONY: test
 
 test:
-	python -m unittest discover src/test
+	PYTHONPATH=src python -m unittest discover src/test
