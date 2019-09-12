@@ -11,7 +11,7 @@ class WorkspaceResponseError(RuntimeError):
             self.resp_data = None
 
     def __str__(self):
-        return f"Workspace error with code {self.status_code}\n  {self.resp_data}"
+        return f"Workspace error with code {self.status_code}:\n{self.resp_text}"
 
 
 class UnauthorizedShockDownload(RuntimeError):
