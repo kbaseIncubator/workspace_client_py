@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='kbase_workspace_client',
+    name='kbase-workspace-client',
     version='0.2.1',
     description='KBase workspace client',
     author='KBase Team',
