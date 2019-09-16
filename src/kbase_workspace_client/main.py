@@ -70,7 +70,7 @@ class WorkspaceClient:
         payload = {'version': '1.1', 'method': method, 'params': [params]}
         return _post_req(payload, self._ws_url, self._token)
 
-    def generate_all_ids_for_workspace(self, wsid, latest=True, admin=False):
+    def generate_all_ids_for_workspace(self, wsid, minid=1, maxid=None, latest=True, admin=False):
         """
         Generator, yielding all object IDs + version IDs in a workspace.
         This handles the 10k pagination and will generate *all* ids.
@@ -80,19 +80,20 @@ class WorkspaceClient:
             admin - bool - default False - Make the "list_objects" request as an admin request.
         Yields object ids
         """
-        off = 1
         params = {"ids": [wsid]}  # type: dict
+        if maxid:
+            params['maxObjectID'] = maxid
         if not latest:
             params['showAllVersions'] = 1
         while True:
-            params['minObjectID'] = off
+            params['minObjectID'] = minid
             if admin:
                 part = self.admin_req("listObjects", params)
             else:
                 part = self.req("list_objects", params)
             if len(part) < 1:
                 break
-            off = part[-1][0] + 1
+            minid = part[-1][0] + 1
             for obj in part:
                 yield (obj[0], obj[4])  # yield (obj_id, obj_version)
 
