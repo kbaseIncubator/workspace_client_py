@@ -2,6 +2,7 @@ import os
 import unittest
 import tempfile
 import shutil
+import json
 from kbase_workspace_client import WorkspaceClient, WorkspaceResponseError
 from kbase_workspace_client.exceptions import InvalidWSType, InvalidGenome
 
@@ -13,6 +14,8 @@ _ws_client = WorkspaceClient(url=_URL, token=os.environ['TEST_TOKEN'])
 
 
 class TestMain(unittest.TestCase):
+
+    maxDiff = None
 
     def test_req(self):
         valid_ws_id = '15/38/4'
@@ -54,19 +57,13 @@ class TestMain(unittest.TestCase):
     def test_download_shock_file(self):
         pass
 
-    def test_generate_all_ids_for_workspace(self):
+    def test_generate_obj_infos(self):
         ids = []
-        for each in _ws_client.generate_all_ids_for_workspace(33192):
+        for each in _ws_client.generate_obj_infos(33192):
             ids.append(each)
-        expected = [(1, 52), (4, 1), (7, 1), (9, 1), (10, 1), (11, 1), (12, 4), (19, 1)]
+        with open('src/test/data/generate_obj_infos_response.json') as fd:
+            expected = json.load(fd)
         self.assertEqual(ids, expected)
-
-    def test_generate_all_ids_for_workspace_all_versions(self):
-        count = 0
-        for _ in _ws_client.generate_all_ids_for_workspace(33192, admin=True, latest=False):
-            count += 1
-        expected = [(1, 52), (4, 1), (7, 1), (9, 1), (10, 1), (11, 1), (12, 4), (19, 1)]
-        self.assertTrue(count > len(expected))
 
     def test_err(self):
         _id = '0/0/0'

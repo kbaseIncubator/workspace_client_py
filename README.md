@@ -1,4 +1,4 @@
-# KBase Workspace - Python Client
+# KBasa Workspace - Python Client and Utilities
 
 Generic, pip-installable workspace client for [KBase's workspace service](https://kbase.us/services/ws/docs).
 
@@ -11,8 +11,7 @@ Note that you cannot write any data to the workspace using this module. You'll h
 Install with pip:
 
 ```sh
-pip install --extra-index-url https://pypi.anaconda.org/kbase/simple \
-    kbase-workspace-client==0.2.0
+pip install kbase-workspace-client==0.0.1
 ```
 
 ## Usage
@@ -66,7 +65,7 @@ objects = workspace_client.admin_req('getObjects', {
 })
 ```
 
-### ws_client.generate_all_ids_for_workspace(workspace_id, admin=False, latest=True)
+### ws_client.generate_obj_infos(workspace_id, admin=False, latest=True)
 
 Generator that yields pairs of `(object_id, object_version)` for a workspace.
 
@@ -77,7 +76,7 @@ Options:
 * `latest` - whether to fetch only the latest object versions, or all object versions
 
 ```py
-for (object_id, object_version) in workspace_client.generate_all_ids_for_workspace(123):
+for (object_id, object_version) in workspace_client.generate_obj_infos(123):
     print(f"Found object with ID {object_id} and version {object_version}")
 ```
 
@@ -177,6 +176,14 @@ except WorkspaceResponseError as err:
 
 ## Development
 
+Install the dependencies using python 3:
+
+```
+pip install poetry
+poetry install
+poetry check
+```
+
 ### Tests
 
 Run tests with: `TEST_TOKEN=xyz make test`
@@ -188,11 +195,6 @@ The `TEST_TOKEN` env var should be set to a KBase workspace token.
 Build the package
 
 ```
-python setup.py sdist
-```
-
-Publish the package
-
-```
-anaconda upload -i -u kbase dist/kbase_module-{version}.tar.gz
+poetry build
+poetry publish
 ```
