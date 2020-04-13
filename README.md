@@ -67,17 +67,17 @@ objects = workspace_client.admin_req('getObjects', {
 
 ### ws_client.generate_obj_infos(workspace_id, admin=False, latest=True)
 
-Generator that yields pairs of `(object_id, object_version)` for a workspace.
+Generator that yields all object info tuples for a workspace.
 
-This will yield IDs/versions for *every* object in the workspace.
+[See the object info type here](https://kbase.us/services/ws/docs/Workspace.html#typedefWorkspace.object_info)
 
 Options:
-* `admin` - whether to do a "list_objects" method call using regular or admin credentials
-* `latest` - whether to fetch only the latest object versions, or all object versions
+* `admin` - default `False` - whether to do a Workspace "list_objects" method call using regular or admin credentials
+* `latest` - default `True` - whether to fetch only the latest object versions, or all object versions
 
 ```py
-for (object_id, object_version) in workspace_client.generate_obj_infos(123):
-    print(f"Found object with ID {object_id} and version {object_version}")
+for objinfo in workspace_client.generate_obj_infos(123):
+    print(f"Found object with info tuple {objinfo}")
 ```
 
 ### Streaming responses to files
