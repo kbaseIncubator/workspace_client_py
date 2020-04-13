@@ -1,4 +1,4 @@
-# KBasa Workspace - Python Client and Utilities
+# KBase Workspace - Python Client and Utilities
 
 Generic, pip-installable workspace client for [KBase's workspace service](https://kbase.us/services/ws/docs).
 
