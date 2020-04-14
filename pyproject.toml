@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "kbase_workspace_client"
-version = "0.0.1"
+version = "0.0.2"
 description = "KBase Workspace Client and Utilities"
 authors = ["KBase Team <info@kbase.us>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6.7"
 requests = ">=2"
 biopython = "^1.76"
 
