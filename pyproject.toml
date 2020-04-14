@@ -6,7 +6,7 @@ authors = ["KBase Team <info@kbase.us>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6.7"
 requests = ">=2"
 biopython = "^1.76"
 
