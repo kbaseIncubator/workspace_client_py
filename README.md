@@ -152,7 +152,7 @@ For convenience, a [namedtuple](https://docs.python.org/3.7/library/collections.
 Example usage:
 
 ```py
-> from workspace_client import ObjInfo
+> from kbase_workspace_client import ObjInfo
 > obj_info_list
 [1, "xyz", "Module.Type-12.3", 2, 3, "xyz", 0, "ws_name", 10, 10, {"xyz": 123}]
 > obj_info = ObjInfo(*obj_info_list)
@@ -168,7 +168,7 @@ For convenience, a [namedtuple](https://docs.python.org/3.7/library/collections.
 Example usage:
 
 ```py
-> from workspace_client import WSInfo
+> from kbase_workspace_client import WSInfo
 > ws_info_list
 [123, "x", "username", 123, 123, "n", "n", "unlocked", {"x": 1}]
 > ws_info = WSInfo(*ws_info_list)
