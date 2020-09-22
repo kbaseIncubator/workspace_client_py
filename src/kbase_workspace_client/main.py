@@ -357,18 +357,26 @@ class WorkspaceClient:
     def find_narrative(self, wsid: int, admin: bool = False) -> Optional[ObjInfo]:
         """
         Fetch the narrative object out of a workspace.
-        This will be slow if the workspace has tons of objects and the
-        narrative is not close to the beginning.
         Args:
             wsid: workspace ID
             admin: whether to make the request as a Workspace administrator
         Returns:
             None if no narrative present, or an ObjInfo for the narrative object.
         """
-        for obj_info_raw in self.generate_obj_infos(wsid, admin=admin):
-            obj_info = ObjInfo(*obj_info_raw)
-            if obj_info.type.startswith("KBaseNarrative.Narrative"):
-                return obj_info
+        req = self.admin_req if admin else self.req
+        ws_meth = "getWorkspaceInfo" if admin else "get_workspace_info"
+        ws_info_raw = req(ws_meth, {"id": wsid})
+        ws_info = WSInfo(*ws_info_raw)
+        # Fetch the narrative ID from the workspace metadata
+        try:
+            narr_obj_id = int(ws_info.metadata.get('narrative'))
+        except TypeError:
+            # No narrative ID accessible from the workspace info
+            return None
+        ref = f"{wsid}/{narr_obj_id}"
+        obj_meth = "getObjectInfo" if admin else "get_object_info3"
+        narr_info_raw = req(obj_meth, {"objects": [{"ref": ref}]})["infos"][0]
+        return ObjInfo(*narr_info_raw)
 
 
 def _download_obj(client, ref: str, data: bool = True, admin: bool = False) -> dict:
