@@ -145,6 +145,14 @@ Options:
 assembly_ref = ws_client.get_assembly_from_genome('1/2/3')
 ```
 
+### ws_client.find_narrative(workspace_id: int, admin=False) -> ObjInfo
+
+Find the narrative object in a given workspace. Returns the `ObjInfo` namedtuple for the narrative.
+
+```py
+narrative_info = ws_client.find_narrative(123, admin=True)
+```
+
 ### The ObjInfo Named Tuple
 
 For convenience, a [namedtuple](https://docs.python.org/3.7/library/collections.html#collections.namedtuple) called `ObjInfo` is provided to give key names to the `object_info` tuple, found in various results from the workspace: https://kbase.us/services/ws/docs/Workspace.html#typedefWorkspace.object_info

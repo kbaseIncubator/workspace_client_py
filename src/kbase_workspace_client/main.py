@@ -1,4 +1,5 @@
 from collections import namedtuple
+from typing import Optional
 import json
 import os
 import requests
@@ -326,6 +327,21 @@ class WorkspaceClient:
         # Return a reference path of `genome_ref;assembly_ref`
         ref_path = ref + ';' + assembly_ref
         return ref_path
+
+    def find_narrative(self, wsid: int, admin=False) -> Optional[ObjInfo]:
+        """
+        Fetch the narrative object out of a workspace.
+        This will be slow if the workspace has tons of objects and the
+        narrative is not close to the beginning.
+        Args:
+            wsid: workspace ID
+        Returns:
+            None if no narrative present, or an ObjInfo for the narrative object.
+        """
+        for obj_info_raw in self.generate_obj_infos(wsid, admin=admin):
+            obj_info = ObjInfo(*obj_info_raw)
+            if obj_info.type.startswith("KBaseNarrative.Narrative"):
+                return obj_info
 
 
 def _download_obj(client, ref, data=True, admin=False):

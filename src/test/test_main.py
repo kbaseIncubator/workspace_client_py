@@ -185,3 +185,24 @@ class TestMain(unittest.TestCase):
         self.assertEqual(named.chsum, obj_info[8])
         self.assertEqual(named.size, obj_info[9])
         self.assertEqual(named.meta, obj_info[10])
+
+    def test_find_narrative_ok(self):
+        narr_info = _ws_client.find_narrative(34819, admin=True)
+        self.assertEqual(narr_info.type, "KBaseNarrative.Narrative-4.0")
+        self.assertEqual(narr_info.wsid, 34819)
+
+    def test_find_narrative_nonexistent(self):
+        with self.assertRaises(WorkspaceResponseError) as ctx:
+            _ws_client.find_narrative(99999999, admin=True)
+        self.assertEqual(ctx.exception.resp_data['error']['code'], -32500)
+
+    def test_find_narrative_no_access(self):
+        with self.assertRaises(WorkspaceResponseError) as ctx:
+            _ws_client.find_narrative(54116)
+        # Permissions error
+        self.assertEqual(ctx.exception.resp_data['error']['code'], -32500)
+
+    def test_find_narrative_admin_access(self):
+        narr_info = _ws_client.find_narrative(54116, admin=True)
+        self.assertEqual(narr_info.type, "KBaseNarrative.Narrative-4.0")
+        self.assertEqual(narr_info.wsid, 54116)
