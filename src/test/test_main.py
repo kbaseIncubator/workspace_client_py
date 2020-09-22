@@ -2,7 +2,7 @@ import os
 import unittest
 import tempfile
 import shutil
-from kbase_workspace_client import WorkspaceClient, WorkspaceResponseError
+from kbase_workspace_client import WorkspaceClient, WorkspaceResponseError, WSInfo, ObjInfo
 from kbase_workspace_client.exceptions import InvalidWSType, InvalidGenome
 
 if not os.environ.get('TEST_TOKEN'):
@@ -151,3 +151,37 @@ class TestMain(unittest.TestCase):
         with self.assertRaises(InvalidGenome) as err:
             _ws_client.get_assembly_from_genome(ref)
         self.assertTrue('no assembly or contigset references' in str(err.exception))
+
+    def test_ws_info_tuple(self):
+        """
+        Test that the WSInfo is importable and works. Mostly a sanity check and some redundancy.
+        """
+        ws_info = [1, "x", "username", 2, 3, "n", "a", "unlocked", {"x": 1}]
+        named = WSInfo(*ws_info)
+        self.assertEqual(named.id, ws_info[0])
+        self.assertEqual(named.workspace, ws_info[1])
+        self.assertEqual(named.owner, ws_info[2])
+        self.assertEqual(named.moddate, ws_info[3])
+        self.assertEqual(named.max_objid, ws_info[4])
+        self.assertEqual(named.user_permission, ws_info[5])
+        self.assertEqual(named.globalread, ws_info[6])
+        self.assertEqual(named.lockstat, ws_info[7])
+        self.assertEqual(named.metadata, ws_info[8])
+
+    def test_obj_info_tuple(self):
+        """
+        Test that the ObjInfo is importable and works. Mostly a sanity check and some redundancy.
+        """
+        obj_info = [1, "xyz", "Module.Type-12.3", 2, 3, "xyz", 4, "ws_name", 5, 6, {"xyz": 123}]
+        named = ObjInfo(*obj_info)
+        self.assertEqual(named.objid, obj_info[0])
+        self.assertEqual(named.name, obj_info[1])
+        self.assertEqual(named.type, obj_info[2])
+        self.assertEqual(named.save_date, obj_info[3])
+        self.assertEqual(named.version, obj_info[4])
+        self.assertEqual(named.saved_by, obj_info[5])
+        self.assertEqual(named.wsid, obj_info[6])
+        self.assertEqual(named.workspace, obj_info[7])
+        self.assertEqual(named.chsum, obj_info[8])
+        self.assertEqual(named.size, obj_info[9])
+        self.assertEqual(named.meta, obj_info[10])
