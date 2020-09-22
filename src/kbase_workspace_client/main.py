@@ -312,8 +312,8 @@ class WorkspaceClient:
     def get_assembly_from_genome(self, ref, admin=False):
         """
         Given a Genome object, fetch the reference to its Assembly object on the workspace.
-        Arguments:
-          ref is a workspace reference ID in the form 'workspace_id/object_id/version'
+        Args:
+            ref is a workspace reference ID in the form 'workspace_id/object_id/version'
         Returns a workspace reference to an assembly object
         """
         # Fetch the workspace object and check its type
@@ -335,6 +335,7 @@ class WorkspaceClient:
         narrative is not close to the beginning.
         Args:
             wsid: workspace ID
+            admin: whether to make the request as a Workspace administrator
         Returns:
             None if no narrative present, or an ObjInfo for the narrative object.
         """
