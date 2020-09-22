@@ -145,6 +145,38 @@ Options:
 assembly_ref = ws_client.get_assembly_from_genome('1/2/3')
 ```
 
+### The ObjInfo Named Tuple
+
+For convenience, a [namedtuple](https://docs.python.org/3.7/library/collections.html#collections.namedtuple) called `ObjInfo` is provided to give key names to the `object_info` tuple, found in various results from the workspace: https://kbase.us/services/ws/docs/Workspace.html#typedefWorkspace.object_info
+
+Example usage:
+
+```py
+> from workspace_client import ObjInfo
+> obj_info_list
+[1, "xyz", "Module.Type-12.3", 2, 3, "xyz", 0, "ws_name", 10, 10, {"xyz": 123}]
+> obj_info = ObjInfo(*obj_info_list)
+ObjInfo(objid=1, name='xyz', type='Module.Type-12.3', save_date=2, version=3, saved_by='xyz', wsid=0, workspace='ws_name', chsum=10, size=10, meta={'xyz': 123})
+> obj_info.metadata
+{'xyz': 123}
+```
+
+### The WSInfo Named Tuple
+
+For convenience, a [namedtuple](https://docs.python.org/3.7/library/collections.html#collections.namedtuple) called `WSInfo` is provided to give key names to the `workspace_info` tuple, found in various results from the workspace: https://kbase.us/services/ws/docs/Workspace.html#typedefWorkspace.workspace_info
+
+Example usage:
+
+```py
+> from workspace_client import WSInfo
+> ws_info_list
+[123, "x", "username", 123, 123, "n", "n", "unlocked", {"x": 1}]
+> ws_info = WSInfo(*ws_info_list)
+WSInfo(id=123, workspace='x', owner='username', moddate=123, max_objid=123, user_permission='n', globalread='n', lockstat='unlocked', metadata={'x': 1})
+> ws_info.metadata
+{'x': 1}
+```
+
 ## Exceptions
 
 ### WorkspaceResponseError

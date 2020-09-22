@@ -1,5 +1,6 @@
-import os
+from collections import namedtuple
 import json
+import os
 import requests
 
 from kbase_workspace_client.contigset_to_fasta import contigset_to_fasta
@@ -11,6 +12,32 @@ from kbase_workspace_client.exceptions import (
     FileExists,
     InvalidGenome,
 )
+
+# Named tuples for object info and workspace info
+ObjInfo = namedtuple('ObjInfo', [
+  "objid",
+  "name",
+  "type",
+  "save_date",
+  "version",
+  "saved_by",
+  "wsid",
+  "workspace",
+  "chsum",
+  "size",
+  "meta",
+])
+WSInfo = namedtuple('WSInfo', [
+  "id",
+  "workspace",
+  "owner",
+  "moddate",
+  "max_objid",
+  "user_permission",
+  "globalread",
+  "lockstat",
+  "metadata",
+])
 
 
 def _post_req(payload, url, token, file_path=None):
