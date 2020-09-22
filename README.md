@@ -157,7 +157,7 @@ Example usage:
 [1, "xyz", "Module.Type-12.3", 2, 3, "xyz", 0, "ws_name", 10, 10, {"xyz": 123}]
 > obj_info = ObjInfo(*obj_info_list)
 ObjInfo(objid=1, name='xyz', type='Module.Type-12.3', save_date=2, version=3, saved_by='xyz', wsid=0, workspace='ws_name', chsum=10, size=10, meta={'xyz': 123})
-> obj_info.metadata
+> obj_info.meta
 {'xyz': 123}
 ```
 
