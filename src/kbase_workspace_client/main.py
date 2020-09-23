@@ -42,7 +42,7 @@ WSInfo = namedtuple('WSInfo', [
 ])
 
 
-def _post_req(payload: dict, url: str, token: str, file_path: str = None) -> Any:
+def _post_req(payload: dict, url: str, token: Optional[str], file_path: str = None) -> Any:
     """Make a post request to the workspace server and process the response."""
     headers = {'Authorization': token}
     with requests.post(url, data=json.dumps(payload), headers=headers, stream=True) as resp:
@@ -108,7 +108,7 @@ class WorkspaceClient:
             minid: int = 1,
             maxid: Optional[int] = None,
             latest: bool = True,
-            admin: bool = False) -> Generator[list]:
+            admin: bool = False) -> Generator[list, None, None]:
         """
         Generator, yielding all object IDs + version IDs in a workspace.
         This handles the 10k pagination and will generate *all* ids.
