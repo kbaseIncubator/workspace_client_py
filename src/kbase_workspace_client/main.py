@@ -1,4 +1,5 @@
 from collections import namedtuple
+from typing import Optional
 import json
 import os
 import requests
@@ -311,8 +312,8 @@ class WorkspaceClient:
     def get_assembly_from_genome(self, ref, admin=False):
         """
         Given a Genome object, fetch the reference to its Assembly object on the workspace.
-        Arguments:
-          ref is a workspace reference ID in the form 'workspace_id/object_id/version'
+        Args:
+            ref is a workspace reference ID in the form 'workspace_id/object_id/version'
         Returns a workspace reference to an assembly object
         """
         # Fetch the workspace object and check its type
@@ -326,6 +327,30 @@ class WorkspaceClient:
         # Return a reference path of `genome_ref;assembly_ref`
         ref_path = ref + ';' + assembly_ref
         return ref_path
+
+    def find_narrative(self, wsid: int, admin=False) -> Optional[ObjInfo]:
+        """
+        Fetch the narrative object out of a workspace.
+        Args:
+            wsid: workspace ID
+            admin: whether to make the request as a Workspace administrator
+        Returns:
+            None if no narrative present, or an ObjInfo for the narrative object.
+        """
+        req = self.admin_req if admin else self.req
+        ws_meth = "getWorkspaceInfo" if admin else "get_workspace_info"
+        ws_info_raw = req(ws_meth, {"id": wsid})
+        ws_info = WSInfo(*ws_info_raw)
+        # Fetch the narrative ID from the workspace metadata
+        try:
+            narr_obj_id = int(ws_info.metadata.get('narrative'))
+        except TypeError:
+            # No narrative ID accessible from the workspace info
+            return None
+        ref = f"{wsid}/{narr_obj_id}"
+        obj_meth = "getObjectInfo" if admin else "get_object_info3"
+        narr_info_raw = req(obj_meth, {"objects": [{"ref": ref}]})["infos"][0]
+        return ObjInfo(*narr_info_raw)
 
 
 def _download_obj(client, ref, data=True, admin=False):
