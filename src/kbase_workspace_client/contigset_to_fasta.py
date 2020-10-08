@@ -6,7 +6,6 @@ This module provides a utility for converting that data into a fasta file.
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 from Bio.Seq import Seq
-from Bio.Alphabet import SingleLetterAlphabet
 
 
 def contigset_generate_contigs(ws_obj):
@@ -19,7 +18,7 @@ def contigset_generate_contigs(ws_obj):
     contigs = ws_obj['data']['contigs']
     for contig in contigs:
         rec = SeqRecord(
-            Seq(contig['sequence'], SingleLetterAlphabet),
+            Seq(contig['sequence']),
             id=contig['id'],
             description=contig.get('description', '')
         )
